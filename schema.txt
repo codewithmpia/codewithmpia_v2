@@ -1,0 +1,428 @@
+DATABASE SCHEMA (SQLite)
+
+Table: role_user
+  - user_id: INTEGER (PK) NOT NULL
+  - role_id: INTEGER (PK) NOT NULL
+
+Table: _asok_migrations
+  - id: INTEGER (PK)
+  - name: VARCHAR(255) NOT NULL
+  - batch: INTEGER NOT NULL
+  - applied_at: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+Table: admin_logs
+  - id: INTEGER (PK)
+  - user_id: INTEGER
+  - action: TEXT NOT NULL
+  - entity: TEXT NOT NULL
+  - entity_id: INTEGER
+  - changes: TEXT
+  - created_at: TEXT
+
+Table: asok_sessions
+  - id: INTEGER (PK)
+  - sid: TEXT NOT NULL
+  - user_id: INTEGER
+  - ip: TEXT
+  - user_agent: TEXT
+  - device_type: TEXT
+  - browser: TEXT
+  - os_name: TEXT
+  - location: TEXT
+  - is_active: INTEGER DEFAULT true
+  - last_seen: INTEGER
+  - created_at: TEXT
+  - revoked_at: INTEGER
+
+Table: asok_trash
+  - id: INTEGER (PK)
+  - model_name: TEXT NOT NULL
+  - model_slug: TEXT NOT NULL
+  - object_id: INTEGER
+  - object_repr: TEXT
+  - data: TEXT
+  - deleted_by_id: INTEGER
+  - deleted_at: TEXT
+
+Table: announcements
+  - id: INTEGER (PK)
+  - message: TEXT NOT NULL
+  - message_en: TEXT
+  - type: TEXT NOT NULL DEFAULT 'info'
+  - is_active: INTEGER DEFAULT false
+  - is_dismissible: INTEGER DEFAULT true
+  - start_date: TEXT
+  - end_date: TEXT
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: categories
+  - id: INTEGER (PK)
+  - name: TEXT NOT NULL
+  - name_en: TEXT
+  - slug: TEXT
+  - description: TEXT
+  - description_en: TEXT
+  - created_at: TEXT
+
+Table: chapters
+  - id: INTEGER (PK)
+  - course_id: INTEGER NOT NULL
+  - title: TEXT NOT NULL
+  - title_en: TEXT
+  - description: TEXT
+  - description_en: TEXT
+  - order: INTEGER NOT NULL DEFAULT 0
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: chapters_fts
+  - title: 
+  - title_en: 
+  - description: 
+  - description_en: 
+
+Table: chapters_fts_data
+  - id: INTEGER (PK)
+  - block: BLOB
+
+Table: chapters_fts_idx
+  - segid:  (PK) NOT NULL
+  - term:  (PK) NOT NULL
+  - pgno: 
+
+Table: chapters_fts_docsize
+  - id: INTEGER (PK)
+  - sz: BLOB
+
+Table: chapters_fts_config
+  - k:  (PK) NOT NULL
+  - v: 
+
+Table: cheat_sheets
+  - id: INTEGER (PK)
+  - title: TEXT NOT NULL
+  - title_en: TEXT
+  - slug: TEXT
+  - description: TEXT
+  - description_en: TEXT
+  - cover_image: TEXT
+  - filename: TEXT NOT NULL
+  - is_published: INTEGER NOT NULL DEFAULT false
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: cheat_sheets_fts
+  - title: 
+  - title_en: 
+  - description: 
+  - description_en: 
+
+Table: cheat_sheets_fts_data
+  - id: INTEGER (PK)
+  - block: BLOB
+
+Table: cheat_sheets_fts_idx
+  - segid:  (PK) NOT NULL
+  - term:  (PK) NOT NULL
+  - pgno: 
+
+Table: cheat_sheets_fts_docsize
+  - id: INTEGER (PK)
+  - sz: BLOB
+
+Table: cheat_sheets_fts_config
+  - k:  (PK) NOT NULL
+  - v: 
+
+Table: comments
+  - id: INTEGER (PK)
+  - author_name: TEXT NOT NULL
+  - author_email: TEXT
+  - body: TEXT NOT NULL
+  - is_visible: INTEGER NOT NULL DEFAULT true
+  - parent_id: INTEGER
+  - commentable_id: INTEGER
+  - commentable_type: TEXT
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: contacts
+  - id: INTEGER (PK)
+  - name: TEXT NOT NULL
+  - email: TEXT NOT NULL
+  - subject: TEXT NOT NULL DEFAULT 'Question générale'
+  - message: TEXT NOT NULL
+  - handled: INTEGER DEFAULT false
+  - created_at: TEXT
+
+Table: courses
+  - id: INTEGER (PK)
+  - title: TEXT NOT NULL
+  - title_en: TEXT
+  - slug: TEXT
+  - description: TEXT
+  - description_en: TEXT
+  - level: TEXT NOT NULL DEFAULT 'beginner'
+  - price: REAL NOT NULL DEFAULT 0.0
+  - cover_image: TEXT
+  - is_published: INTEGER NOT NULL DEFAULT false
+  - is_featured: INTEGER NOT NULL DEFAULT false
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: courses_fts
+  - title: 
+  - title_en: 
+  - description: 
+  - description_en: 
+
+Table: courses_fts_data
+  - id: INTEGER (PK)
+  - block: BLOB
+
+Table: courses_fts_idx
+  - segid:  (PK) NOT NULL
+  - term:  (PK) NOT NULL
+  - pgno: 
+
+Table: courses_fts_docsize
+  - id: INTEGER (PK)
+  - sz: BLOB
+
+Table: courses_fts_config
+  - k:  (PK) NOT NULL
+  - v: 
+
+Table: enrollments
+  - id: INTEGER (PK)
+  - user_id: INTEGER NOT NULL
+  - course_id: INTEGER NOT NULL
+  - last_lesson_id: INTEGER
+  - completed_at: TEXT
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: lessons
+  - id: INTEGER (PK)
+  - chapter_id: INTEGER NOT NULL
+  - title: TEXT NOT NULL
+  - title_en: TEXT
+  - slug: TEXT
+  - body: TEXT NOT NULL
+  - body_en: TEXT
+  - order: INTEGER NOT NULL DEFAULT 0
+  - duration: INTEGER NOT NULL DEFAULT 10
+  - is_free: INTEGER NOT NULL DEFAULT false
+  - is_published: INTEGER NOT NULL DEFAULT false
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: lessons_fts
+  - title: 
+  - title_en: 
+  - body: 
+  - body_en: 
+
+Table: lessons_fts_data
+  - id: INTEGER (PK)
+  - block: BLOB
+
+Table: lessons_fts_idx
+  - segid:  (PK) NOT NULL
+  - term:  (PK) NOT NULL
+  - pgno: 
+
+Table: lessons_fts_docsize
+  - id: INTEGER (PK)
+  - sz: BLOB
+
+Table: lessons_fts_config
+  - k:  (PK) NOT NULL
+  - v: 
+
+Table: lesson_progress
+  - id: INTEGER (PK)
+  - user_id: INTEGER NOT NULL
+  - lesson_id: INTEGER NOT NULL
+  - course_id: INTEGER NOT NULL
+  - completed_at: TEXT
+
+Table: posts
+  - id: INTEGER (PK)
+  - title: TEXT NOT NULL
+  - title_en: TEXT NOT NULL
+  - slug: TEXT
+  - excerpt: TEXT NOT NULL
+  - excerpt_en: TEXT
+  - body: TEXT NOT NULL
+  - body_en: TEXT
+  - author: TEXT DEFAULT 'Admin'
+  - image_sm: TEXT
+  - image_lg: TEXT
+  - is_published: INTEGER DEFAULT false
+  - is_active: INTEGER DEFAULT false
+  - view_count: INTEGER DEFAULT 0
+  - reading_time: INTEGER DEFAULT 2
+  - category_id: INTEGER NOT NULL DEFAULT true
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: posts_fts
+  - title: 
+  - title_en: 
+  - excerpt: 
+  - excerpt_en: 
+  - body: 
+  - body_en: 
+
+Table: posts_fts_data
+  - id: INTEGER (PK)
+  - block: BLOB
+
+Table: posts_fts_idx
+  - segid:  (PK) NOT NULL
+  - term:  (PK) NOT NULL
+  - pgno: 
+
+Table: posts_fts_docsize
+  - id: INTEGER (PK)
+  - sz: BLOB
+
+Table: posts_fts_config
+  - k:  (PK) NOT NULL
+  - v: 
+
+Table: projects
+  - id: INTEGER (PK)
+  - name: TEXT NOT NULL
+  - description: TEXT NOT NULL
+  - description_en: TEXT
+  - icon: TEXT
+  - image1: TEXT
+  - image2: TEXT
+  - image3: TEXT
+  - url: TEXT
+  - type: TEXT NOT NULL DEFAULT 'web'
+  - status: TEXT DEFAULT 'active'
+  - technologies: TEXT DEFAULT '[]'
+  - gradient_from: TEXT DEFAULT '#8b5cf6'
+  - gradient_to: TEXT DEFAULT '#9333ea'
+  - order: INTEGER NOT NULL DEFAULT 0
+  - is_featured: INTEGER NOT NULL DEFAULT false
+  - is_private: INTEGER NOT NULL DEFAULT false
+  - created_at: TEXT
+
+Table: roles
+  - id: INTEGER (PK)
+  - name: TEXT NOT NULL
+  - label: TEXT
+  - permissions: TEXT DEFAULT ''
+  - created_at: TEXT
+
+Table: snippets
+  - id: INTEGER (PK)
+  - title: TEXT NOT NULL
+  - title_en: TEXT
+  - slug: TEXT NOT NULL
+  - description: TEXT
+  - description_en: TEXT
+  - code: TEXT NOT NULL
+  - language: TEXT NOT NULL DEFAULT 'python'
+  - is_premium: INTEGER NOT NULL DEFAULT true
+  - is_hidden: INTEGER NOT NULL DEFAULT false
+  - created_at: TEXT
+  - updated_at: TEXT
+
+Table: snippets_fts
+  - title: 
+  - title_en: 
+  - description: 
+  - description_en: 
+
+Table: snippets_fts_data
+  - id: INTEGER (PK)
+  - block: BLOB
+
+Table: snippets_fts_idx
+  - segid:  (PK) NOT NULL
+  - term:  (PK) NOT NULL
+  - pgno: 
+
+Table: snippets_fts_docsize
+  - id: INTEGER (PK)
+  - sz: BLOB
+
+Table: snippets_fts_config
+  - k:  (PK) NOT NULL
+  - v: 
+
+Table: subscribers
+  - id: INTEGER (PK)
+  - email: TEXT NOT NULL
+  - confirmed: INTEGER DEFAULT false
+  - confirm_token: TEXT
+  - locale: TEXT NOT NULL DEFAULT 'fr'
+  - created_at: TEXT
+
+Table: tags
+  - id: INTEGER (PK)
+  - name: TEXT NOT NULL
+  - slug: TEXT
+  - created_at: TEXT
+
+Table: tools
+  - id: INTEGER (PK)
+  - title: TEXT NOT NULL
+  - title_en: TEXT
+  - slug: TEXT
+  - url: TEXT NOT NULL
+  - description: TEXT NOT NULL
+  - description_en: TEXT
+  - is_internal: INTEGER NOT NULL DEFAULT true
+  - created_at: TEXT
+  - tool_category_id: INTEGER NOT NULL
+
+Table: tools_fts
+  - title: 
+  - title_en: 
+  - description: 
+  - description_en: 
+
+Table: tools_fts_data
+  - id: INTEGER (PK)
+  - block: BLOB
+
+Table: tools_fts_idx
+  - segid:  (PK) NOT NULL
+  - term:  (PK) NOT NULL
+  - pgno: 
+
+Table: tools_fts_docsize
+  - id: INTEGER (PK)
+  - sz: BLOB
+
+Table: tools_fts_config
+  - k:  (PK) NOT NULL
+  - v: 
+
+Table: tool_categories
+  - id: INTEGER (PK)
+  - name: TEXT NOT NULL
+  - name_en: TEXT
+  - slug: TEXT
+  - description: TEXT NOT NULL
+  - description_en: TEXT
+  - created_at: TEXT
+
+Table: users
+  - id: INTEGER (PK)
+  - email: TEXT NOT NULL
+  - password: TEXT NOT NULL
+  - name: TEXT
+  - avatar: TEXT
+  - is_admin: INTEGER DEFAULT false
+  - totp_secret: TEXT
+  - totp_enabled: INTEGER DEFAULT false
+  - backup_codes: TEXT
+  - created_at: TEXT

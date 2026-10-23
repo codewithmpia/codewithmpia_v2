@@ -1,0 +1,2 @@
+asok==0.8.0
+asok-lucide==1.0.1
